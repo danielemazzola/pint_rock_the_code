@@ -20,28 +20,16 @@ body {
 main {
   margin-bottom: 40px;
 }
-.dark {
-  background-color: var(--primary);
-  color: var(--color-background);
-}
 
 a {
   text-decoration: none;
   color: inherit;
 }
 
-.active {
-  background-color: var(--primary);
-  color: var(--color-background);
-  padding: 1rem 1.4rem;
-  border-radius: 2rem;
-}
-
 li {
   list-style-type: none;
 }
 
-/* HEADER STYLES */
 header {
   display: flex;
   height: 15vh;
@@ -93,13 +81,12 @@ header .icon {
   filter: contrast(30%);
 }
 
-header .profileimg {
+header .imageP {
   border-radius: 50%;
   height: 40px;
   width: 40px;
 }
 
-/* GALLERY ITEM STYLES */
 .gallery-item {
   height: 100%;
   width: 100%;
@@ -228,7 +215,6 @@ header .profileimg {
   grid-column: span 1;
 }
 
-/* GALLERY STYLES */
 .gallery {
   padding: 0 1rem;
   display: grid;
@@ -236,7 +222,6 @@ header .profileimg {
   gap: 1rem;
   grid-auto-flow: row dense;
 }
-
 @media screen and (min-width: 576px) {
   .gallery {
     grid-template-columns: repeat(1, fr);

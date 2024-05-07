@@ -1,6 +1,5 @@
 import './style.css'
 
-// HEADER
 const headerTemplate = () => {
   return `
   <h1>P</h1>
