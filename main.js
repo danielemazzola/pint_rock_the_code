@@ -2,7 +2,7 @@ import './style.css'
 
 const headerTemplate = () => {
   return `
-  <h1>P</h1>
+  <a href="./">P</a>
   <input type="text" placeholder="Search" id="searchinput"/>
   <button id="searchbtn"><img src="https://cdn-icons-png.flaticon.com/512/639/639375.png" alt="Search icon"/></button>
     `
@@ -16,7 +16,7 @@ printHeaderTemplate()
 
 const cardTemplate = (item) => {
   return `
-    <li class="gallery-item" style="background-image: url(${item.urls.regular}); border: 3px solid ${item.color}">
+    <li class="gallery-item" style="background-image: url(${item.urls.regular}); border: 1px solid ${item.color}">
     <div class="info">
         <div class="save-btn">
             <button>Guardar</button>
@@ -42,7 +42,6 @@ import { createApi } from 'unsplash-js'
 const unsplash = createApi({
   accessKey: 'IqsMfzMZ9ZfbHlwusPFS7Zx8y1IN_eEGlDtIX_iSQKI'
 })
-
 const searchPhotos = async (keyword) => {
   const images = await unsplash.search.getPhotos({
     query: keyword,
@@ -72,7 +71,13 @@ const galleryListeners = async () => {
   const btn = document.querySelector('#searchbtn')
   btn.addEventListener('click', async () => {
     const images = await searchPhotos(input.value)
-    printItems(images.response.results)
+    if (input.value === '') {
+      alert('UPS.. No hay valores de busqued!')
+    } else if (images.response.results.length <= 0) {
+      alert('UPS.. No hay resultados en tu busqueda!')
+    } else {
+      printItems(images.response.results)
+    }
   })
 }
 
@@ -80,7 +85,7 @@ const printTemplate = async () => {
   document.querySelector('main').innerHTML = galleryTemplate()
   galleryListeners()
 
-  const images = await searchPhotos('dev')
+  const images = await searchPhotos('Day')
   printItems(images.response.results)
 }
 

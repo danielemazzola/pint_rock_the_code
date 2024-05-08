@@ -39,7 +39,7 @@ header {
   gap: 1.5rem;
 }
 
-header > h1 {
+header > a {
   background-color: var(--logo);
   width: 30px;
   height: 30px;
@@ -47,6 +47,7 @@ header > h1 {
   text-align: center;
   border-radius: 50%;
   color: var(--color-background);
+  cursor: pointer;
 }
 
 header input {
@@ -91,7 +92,7 @@ header .imageP {
   height: 100%;
   width: 100%;
   background-size: cover;
-  border-radius: 2rem;
+  border-radius: 5px;
   overflow: hidden;
 }
 
