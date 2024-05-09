@@ -40,15 +40,25 @@ const cardTemplate = (item) => {
 import { createApi } from 'unsplash-js'
 
 const unsplash = createApi({
-  accessKey: 'IqsMfzMZ9ZfbHlwusPFS7Zx8y1IN_eEGlDtIX_iSQKI'
+  accessKey: 'lUsRIem0Y3-POIodkGMFUsN39sD0iu0LlsBoyt20AbE'
 })
 const searchPhotos = async (keyword) => {
-  const images = await unsplash.search.getPhotos({
-    query: keyword,
-    page: 1,
-    perPage: 30
-  })
-  return images
+  let images
+  if (keyword === '') {
+    images = await unsplash.photos.getRandom({
+      query: keyword,
+      page: 1,
+      perPage: 30
+    })
+    return images
+  } else {
+    images = await unsplash.search.getPhotos({
+      query: keyword,
+      page: 1,
+      perPage: 30
+    })
+    return images
+  }
 }
 
 const galleryTemplate = () => {
@@ -69,13 +79,44 @@ const printItems = (items) => {
 const galleryListeners = async () => {
   const input = document.querySelector('#searchinput')
   const btn = document.querySelector('#searchbtn')
+  const divAlert = document.createElement('div')
+  const msgSuggest = document.createElement('p')
+  const divButtons = document.createElement('div')
+  const suggestDateUno = document.createElement('button')
+  const suggestDateTwo = document.createElement('button')
+  const suggestDateThree = document.createElement('button')
+  suggestDateUno.addEventListener('click', (e) => {
+    input.value = suggestDateUno.textContent
+  })
+  suggestDateTwo.addEventListener('click', (e) => {
+    input.value = suggestDateTwo.textContent
+  })
+  suggestDateThree.addEventListener('click', (e) => {
+    input.value = suggestDateThree.textContent
+  })
   btn.addEventListener('click', async () => {
     const images = await searchPhotos(input.value)
     if (input.value === '') {
-      alert('UPS.. No hay valores de busqued!')
+      input.addEventListener('click', () => {
+        btn.setAttribute('style', 'cursor:pointer')
+        divAlert.innerHTML = ``
+        divAlert.remove()
+        input.setAttribute('style', 'border: none;')
+      })
+      input.setAttribute('style', 'border: 2px solid red;')
     } else if (images.response.results.length <= 0) {
-      alert('UPS.. No hay resultados en tu busqueda!')
+      const gallery = document.querySelector('.gallery')
+      const parent = gallery.parentNode
+      divAlert.classList.add('alert')
+      msgSuggest.textContent = `Sugerencias de busqueda:`
+      suggestDateUno.textContent = `Noches oscuras`
+      suggestDateTwo.textContent = `Programación`
+      suggestDateThree.textContent = `Barcos`
+      parent.insertBefore(divAlert, gallery)
+      divAlert.append(msgSuggest, divButtons)
+      divButtons.append(suggestDateUno, suggestDateTwo, suggestDateThree)
     } else {
+      divAlert.remove()
       printItems(images.response.results)
     }
   })
@@ -85,7 +126,7 @@ const printTemplate = async () => {
   document.querySelector('main').innerHTML = galleryTemplate()
   galleryListeners()
 
-  const images = await searchPhotos('Day')
+  const images = await searchPhotos('office')
   printItems(images.response.results)
 }
 
